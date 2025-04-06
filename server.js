@@ -1,4 +1,5 @@
-import { environment } from "./config/index.js";
+import { environment } from "./config/index.js"; /**Import the environment variable from config index to access globa env variables */
+import { errorHandler } from "./middleware/index.js";
 import { users } from "./routes/index.js";
 import express from "express";
 const app = express();
@@ -21,7 +22,19 @@ app.get("/", (req, res) => {
   });
 });
 
+/**
+ * Set up route middleware
+ * All the routes are imported from the routes directory.
+ * The routes are mounted on the /api/v1/ endpoint.
+ * The users route is used to handle requests related to user operations.
+ */
 app.use("/api/v1", users);
+
+/**
+ * Set up error handling middleware
+ * The error handling middleware is used to handle errors that occur in the application.
+ */
+app.use(errorHandler);
 
 /**
  * Set up route middleware for not found routes
