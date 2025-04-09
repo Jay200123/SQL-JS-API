@@ -13,6 +13,11 @@ export const errorHandler = (err, req, res, next) => {
     },
   });
 
+  /**
+   * Set the status code and message for the response
+   * - If the error has a statusCode property, use that
+   * - Otherwise, default to 500 (Internal Server Error)
+   */
   const statusCode = err.statusCode || 500;
   const errorMessage = err.message || "Internal Server Error";
 
@@ -22,15 +27,10 @@ export const errorHandler = (err, req, res, next) => {
    * * @param {Object} res - The response object
    * @param {number} statusCode - The HTTP status code to send
    * @param {string} errorMessage - The error message to send
-   * @returns {Object} - The error response object
-   * @throws {Error} - Throws an error if the response cannot be sent
-   * 
+   *
    */
-
   return res.status(statusCode).json({
     status: "error",
     message: errorMessage,
   });
 };
-
-export default errorHandler;
