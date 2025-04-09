@@ -1,16 +1,42 @@
-// Import necessary modules and classes
-import { UserRepository } from "./repository.js"; // Handles database interactions for user data
-import { UserService } from "./service.js"; // Contains business logic for user-related operations
-import { UserController } from "./controller.js"; // Handles HTTP requests and responses for user routes
-import express from "express"; // Express framework for routing and handling requests
+import { UserRepository } from "./repository.js"; 
+import { UserService } from "./service.js"; 
+import { UserController } from "./controller.js"; 
+import express from "express";
 
-// Create a new Express router
+/**
+ * Creates an Express router for user related routes.
+ */
 const router = express.Router();
 
-// Initialize the UserRepository, UserService, and UserController
-const userRepository = new UserRepository(); // Repository to interact with the database
-const userService = new UserService(userRepository); // Service layer to handle business logic
-const userController = new UserController(userService); // Controller to handle request and response for user routes
+/**
+ * Initializes the user repository, service and controller.
+ * This is where the dependency injection happens.
+ * The repository is injected into the service,
+ * and the service is injected into the controller.
+ * This allows for a clean separation of concerns and makes the code more maintainable.
+ */
+
+/**
+ * Repository class for handling database interactions for user data.
+ * This class is responsible for all CRUD operations related to users database.
+ * It abstracts the database logic and provides a clean interface for the service layer.
+ */
+const userRepository = new UserRepository();
+/**
+ * Service class for handling business logic related to users.
+ * This class uses the repository to perform CRUD operations and contains any additional business logic needed.
+ * It acts as an intermediary between the controller and the repository.
+ * The service layer is responsible for validating data, applying business rules, and orchestrating complex operations.
+ * (Here is where the data is processed).
+ */
+const userService = new UserService(userRepository);
+/**
+ * Controller class for handling HTTP requests and responses related to users.
+ * This class uses the service to perform operations and formats the responses for the client.
+ * It acts as a bridge between the HTTP layer and the service layer.
+ * The controller is responsible for handling incoming requests, validating input, and returning appropriate responses.
+ */
+const userController = new UserController(userService);
 
 // Define the routes for handling user-related HTTP requests
 const userRoutes = [
