@@ -20,9 +20,11 @@ export class UserController {
     const results = new Handler(res);
     const data = await this.UserService.getOneUserService(req.params.id);
 
+    const result = data.result[0];
+
     return data.result.length === 0
       ? next(new ErrorHandler(404, "User not found"))
-      : results.SuccessHandler(200, data, "User retrieved successfully");
+      : results.SuccessHandler(200, result, "User retrieved successfully");
   }
 
   async createUser(req, res, next) {
