@@ -1,6 +1,6 @@
-import { UserRepository } from "./repository.js"; 
-import { UserService } from "./service.js"; 
-import { UserController } from "./controller.js"; 
+import { UserRepository } from "./repository.js";
+import { UserService } from "./service.js";
+import { UserController } from "./controller.js";
 import express from "express";
 
 /**
@@ -38,23 +38,46 @@ const userService = new UserService(userRepository);
  */
 const userController = new UserController(userService);
 
-// Define the routes for handling user-related HTTP requests
+/**
+ * Here is where the routes are defined, such as http method, path, and handler.
+ * The handler is a method of the controller class that will be called when the route is hit.
+ */
 const userRoutes = [
   {
-    method: "get", // HTTP method for this route
-    path: "/users/all", // The route path for retrieving all users
-    handler: userController.getAllUsers.bind(userController), // Bind the `this` context to `userController`
-    // The `.bind()` ensures that when the route is hit, `this` inside `getAllUsers` refers to the `userController` object
+    /**
+     * This route is for retrieving all the users data from the database.
+     * The method is GET,
+     * The route path is "/users/all",
+     * The handler is the getAllUsers method of the userController class.
+     * The handler is bound to the userController instance to ensure that `this` refers to the correct context.
+     */
+    method: "get",
+    path: "/users/all",
+    handler: userController.getAllUsers.bind(userController),
   },
   {
-    method: "get", // HTTP method for this route
-    path: "/user/:id", // The route path for retrieving a single user by ID
-    handler: userController.getOneUser.bind(userController), // Bind `this` to `userController` for `getOneUser`
+    /**
+     * This route is for retrieving single user data filtered by ID from the database.
+     * The method is GET,
+     * The route path is "/user/:id",
+     * The handler is the getOneUser method of the userController class.
+     * The handler is bound to the userController instance to ensure that `this` refers to the correct context.
+     */
+    method: "get",
+    path: "/user/:id",
+    handler: userController.getOneUser.bind(userController),
   },
   {
-    method: "post", // HTTP method for this route
-    path: "/user/create", // The route path for creating a new user
-    handler: userController.createUser.bind(userController), // Bind `this` to `userController` for `createUser`
+    /**
+     * This route is for creating a new user in the database.
+     * The method is POST,
+     * The route path is "/user/create",
+     * The handler is the createUser method of the userController class.
+     * The handler is bound to the userController instance to ensure that `this` refers to the correct context.
+     */
+    method: "post",
+    path: "/user/create",
+    handler: userController.createUser.bind(userController),
   },
 ];
 
